@@ -1,6 +1,8 @@
 # EGP-410
 Template projects for base code for EGP 410 assignments.
 
+Editing by Austin
+
 # This repository contains three major directories:
  * DeanLib - Base utility library provided by Dean Lawson. Memory tracking and basic vector mathematics utilities.
  * External Libs - Allegro 5.0.10 support libraries.
