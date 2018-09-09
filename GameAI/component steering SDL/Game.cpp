@@ -176,10 +176,10 @@ void Game::processLoop()
 	mousePos << x << ":" << y;
 
 	//write text at mouse position
-	mpGraphicsSystem->writeText(*mpFont, (float)x, (float)y, mousePos.str(), BLACK_COLOR);
+	mpGraphicsSystem->writeText(*mpFont, (float)x + 12, (float)y - 3, mousePos.str(), BLACK_COLOR);
 
 	//test of fill region
-	mpGraphicsSystem->fillRegion(*pDest, Vector2D(300, 300), Vector2D(500, 500), RED_COLOR);
+	//mpGraphicsSystem->fillRegion(*pDest, Vector2D(300, 300), Vector2D(500, 500), RED_COLOR);
 	mpGraphicsSystem->swap();
 
 	mpMessageManager->processMessagesForThisframe();

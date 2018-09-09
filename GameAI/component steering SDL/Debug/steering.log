@@ -1,0 +1,15 @@
+﻿  main.cpp
+  UnitManager.cpp
+  Unit.cpp
+  SteeringComponent.cpp
+  Steering.cpp
+  SeekSteering.cpp
+c:\users\student\documents\egp-410\gameai\component steering sdl\seeksteering.cpp(57): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+  PositionComponent.cpp
+  PlayerMoveToMessage.cpp
+  PhysicsComponent.cpp
+  GameMessageManager.cpp
+  Game.cpp
+  ComponentManager.cpp
+  Generating Code...
+  steering.vcxproj -> C:\Users\student\Documents\EGP-410\GameAI\component steering SDL\Debug\steering.exe
