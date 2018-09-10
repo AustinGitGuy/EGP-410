@@ -1,11 +1,8 @@
 #include "Steering.h"
 
-
-void Steering::update()
-{
+void Steering::update(){
 	Steering* pTemp = getSteering();
-	if (pTemp != NULL)
-	{
+	if (pTemp != NULL){
 		mData = pTemp->getData();
 	}
 }

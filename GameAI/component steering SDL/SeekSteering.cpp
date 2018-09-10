@@ -12,14 +12,11 @@
 
 
 SeekSteering::SeekSteering(const UnitID& ownerID, const Vector2D& targetLoc, const UnitID& targetID, bool shouldFlee /*= false*/)
-	: Steering()
-{
-	if (shouldFlee)
-	{
+	: Steering(){
+	if (shouldFlee){
 		mType = Steering::FLEE;
 	}
-	else
-	{
+	else {
 		mType = Steering::SEEK;
 	}
 	setOwnerID(ownerID);
@@ -27,26 +24,22 @@ SeekSteering::SeekSteering(const UnitID& ownerID, const Vector2D& targetLoc, con
 	setTargetLoc(targetLoc);
 }
 
-Steering* SeekSteering::getSteering()
-{
+Steering* SeekSteering::getSteering(){
 	Vector2D diff;
 	Unit* pOwner = gpGame->getUnitManager()->getUnit(mOwnerID);
 	//are we seeking a location or a unit?
 	
-	if (mTargetID != INVALID_UNIT_ID)
-	{
+	if (mTargetID != INVALID_UNIT_ID){
 		//seeking unit
 		Unit* pTarget = gpGame->getUnitManager()->getUnit(mTargetID);
 		assert(pTarget != NULL);
 		mTargetLoc = pTarget->getPositionComponent()->getPosition();
 	}
 
-	if (mType == Steering::SEEK)
-	{
+	if (mType == Steering::SEEK){
 		diff = mTargetLoc - pOwner->getPositionComponent()->getPosition();
 	}
-	else
-	{
+	else {
 		diff = pOwner->getPositionComponent()->getPosition() - mTargetLoc;
 	}
 

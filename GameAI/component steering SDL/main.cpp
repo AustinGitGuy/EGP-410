@@ -24,8 +24,7 @@ using namespace std;
 
 PerformanceTracker* gpPerformanceTracker = NULL;
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv){
 	gpPerformanceTracker = new PerformanceTracker;
 	gpPerformanceTracker->startTracking("init");
 
@@ -33,8 +32,7 @@ int main(int argc, char **argv)
 	gpGame = new Game;
 	//init the game
 	bool goodGame = gpGame->init();
-	if (!goodGame)
-	{
+	if(!goodGame){
 		fprintf(stderr, "failed to initialize Game object!\n");
 		return -1;
 	}
@@ -45,8 +43,7 @@ int main(int argc, char **argv)
 	bool shouldExit = false;
 
 	//game loop
-	while (!shouldExit)
-	{
+	while(!shouldExit){
 		gpPerformanceTracker->clearTracker("loop");
 		gpPerformanceTracker->startTracking("loop");
 
@@ -64,7 +61,6 @@ int main(int argc, char **argv)
 		gpPerformanceTracker->stopTracking("loop");
 		cout << "loop took:" << gpPerformanceTracker->getElapsedTime("loop") << "ms";
 		cout << "draw took:" << gpPerformanceTracker->getElapsedTime("draw") << "ms\n";
-
 	}
 
 	gpGame->cleanup();
@@ -72,7 +68,7 @@ int main(int argc, char **argv)
 	gpGame = NULL;
 
 	delete gpPerformanceTracker;
-	MemoryTracker::getInstance()->reportAllocations( cout );
+	MemoryTracker::getInstance()->reportAllocations(cout);
 	system("pause");
 
 	return 0;

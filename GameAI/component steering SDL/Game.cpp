@@ -35,16 +35,13 @@ Game::Game()
 	,mpMessageManager(NULL)
 	,mpComponentManager(NULL)
 	,mpUnitManager(NULL)
-{
-}
+{}
 
-Game::~Game()
-{
+Game::~Game(){
 	cleanup();
 }
 
-bool Game::init()
-{
+bool Game::init(){
 	mShouldExit = false;
 
 	//create Timers
@@ -54,8 +51,7 @@ bool Game::init()
 	//create and init GraphicsSystem
 	mpGraphicsSystem = new GraphicsSystem();
 	bool goodGraphics = mpGraphicsSystem->init( WIDTH, HEIGHT );
-	if(!goodGraphics) 
-	{
+	if(!goodGraphics){
 		fprintf(stderr, "failed to initialize GraphicsSystem object!\n");
 		return false;
 	}
@@ -79,26 +75,22 @@ bool Game::init()
 	
 	//setup sprites
 	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer( mBackgroundBufferID );
-	if( pBackGroundBuffer != NULL )
-	{
+	if(pBackGroundBuffer != NULL){
 		mpSpriteManager->createAndManageSprite( BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, (float)pBackGroundBuffer->getWidth(), (float)pBackGroundBuffer->getHeight() );
 	}
 	GraphicsBuffer* pPlayerBuffer = mpGraphicsBufferManager->getBuffer( mPlayerIconBufferID );
 	Sprite* pArrowSprite = NULL;
-	if( pPlayerBuffer != NULL )
-	{
+	if(pPlayerBuffer != NULL){
 		pArrowSprite = mpSpriteManager->createAndManageSprite( PLAYER_ICON_SPRITE_ID, pPlayerBuffer, 0, 0, (float)pPlayerBuffer->getWidth(), (float)pPlayerBuffer->getHeight() );
 	}
 	GraphicsBuffer* pAIBuffer = mpGraphicsBufferManager->getBuffer(mEnemyIconBufferID);
 	Sprite* pEnemyArrow = NULL;
-	if (pAIBuffer != NULL)
-	{
+	if(pAIBuffer != NULL){
 		pEnemyArrow = mpSpriteManager->createAndManageSprite(AI_ICON_SPRITE_ID, pAIBuffer, 0, 0, (float)pAIBuffer->getWidth(), (float)pAIBuffer->getHeight());
 	}
 
 	GraphicsBuffer* pTargetBuffer = mpGraphicsBufferManager->getBuffer(mTargetBufferID);
-	if (pTargetBuffer != NULL)
-	{
+	if(pTargetBuffer != NULL){
 		mpSpriteManager->createAndManageSprite(TARGET_SPRITE_ID, pTargetBuffer, 0, 0, (float)pTargetBuffer->getWidth(), (float)pTargetBuffer->getHeight());
 	}
 
@@ -120,8 +112,7 @@ bool Game::init()
 	return true;
 }
 
-void Game::cleanup()
-{
+void Game::cleanup(){
 	//delete the timers
 	delete mpLoopTimer;
 	mpLoopTimer = NULL;
@@ -147,15 +138,13 @@ void Game::cleanup()
 	mpComponentManager = NULL;
 }
 
-void Game::beginLoop()
-{
+void Game::beginLoop(){
 	mpLoopTimer->start();
 }
 
 const float TARGET_ELAPSED_MS = LOOP_TARGET_TIME / 1000.0f;
 	
-void Game::processLoop()
-{
+void Game::processLoop(){
 	mpUnitManager->updateAll(TARGET_ELAPSED_MS);
 	mpComponentManager->update(TARGET_ELAPSED_MS);
 	
@@ -187,8 +176,7 @@ void Game::processLoop()
 	//get input - should be moved someplace better
 	SDL_PumpEvents();
 
-	if( SDL_GetMouseState(&x,&y) & SDL_BUTTON(SDL_BUTTON_LEFT) )
-	{
+	if(SDL_GetMouseState(&x,&y) & SDL_BUTTON(SDL_BUTTON_LEFT)){
 		Vector2D pos( x, y );
 		GameMessage* pMessage = new PlayerMoveToMessage( pos );
 		MESSAGE_MANAGER->addMessage( pMessage, 0 );
@@ -202,34 +190,28 @@ void Game::processLoop()
 		const Uint8 *state = SDL_GetKeyboardState(NULL);
 
 		//if escape key was down then exit the loop
-		if( state[SDL_SCANCODE_ESCAPE] )
-		{
+		if(state[SDL_SCANCODE_ESCAPE]){
 			mShouldExit = true;
 		}
 	}
 	Unit* pUnit = mpUnitManager->createRandomUnit(*mpSpriteManager->getSprite(AI_ICON_SPRITE_ID));
-	if (pUnit == NULL)
-	{
+	if(pUnit == NULL){
 		mpUnitManager->deleteRandomUnit();
 	}
 
 }
 
-bool Game::endLoop()
-{
+bool Game::endLoop(){
 	//mpMasterTimer->start();
 	mpLoopTimer->sleepUntilElapsed( LOOP_TARGET_TIME );
 	return mShouldExit;
 }
 
-float genRandomBinomial()
-{
+float genRandomBinomial(){
 	return genRandomFloat() - genRandomFloat();
 }
 
-float genRandomFloat()
-{
+float genRandomFloat(){
 	float r = (float)rand()/(float)RAND_MAX;
 	return r;
 }
-
