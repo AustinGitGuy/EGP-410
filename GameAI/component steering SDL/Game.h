@@ -3,6 +3,7 @@
 #include "Trackable.h"
 #include "PerformanceTracker.h"
 #include "Defines.h"
+#include "InputSystem.h"
 #include <string>
 
 class GraphicsSystem;
@@ -23,8 +24,7 @@ const IDType TARGET_SPRITE_ID = 3;
 
 const float LOOP_TARGET_TIME = 33.3f;//how long should each frame of execution take? 30fps = 33.3ms/frame
 
-class Game:public Trackable
-{
+class Game : public Trackable {
 public:
 	Game();
 	~Game();
@@ -46,6 +46,7 @@ public:
 	inline Timer* getMasterTimer() const { return mpMasterTimer; };
 	inline double getCurrentTime() const { return mpMasterTimer->getElapsedTime(); };
 
+	bool mShouldExit;
 private:
 	GraphicsSystem* mpGraphicsSystem;
 	GraphicsBufferManager* mpGraphicsBufferManager;
@@ -56,7 +57,7 @@ private:
 	Font* mpFont;
 	Timer* mpLoopTimer;
 	Timer* mpMasterTimer;
-	bool mShouldExit;
+	InputSystem* inSys; 
 
 	//should be somewhere else
 	GraphicsBufferID mBackgroundBufferID = "woods";

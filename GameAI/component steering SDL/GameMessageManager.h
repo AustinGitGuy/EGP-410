@@ -5,8 +5,7 @@
 
 class GameMessage;
 
-class GameMessageManager: public Trackable
-{
+class GameMessageManager: public Trackable {
 public:
 	explicit GameMessageManager(Uint32 size=64);
 	~GameMessageManager();
@@ -15,7 +14,6 @@ public:
 	void processMessagesForThisframe();
 
 private:
-
 	CircularQueue<GameMessage*>* mMessages;
 };
 

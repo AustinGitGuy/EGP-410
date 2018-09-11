@@ -1,0 +1,17 @@
+﻿  BaseAction.cpp
+  DecisionTreeHelpers.cpp
+  EndGameState.cpp
+  Game.cpp
+  IntDecision.cpp
+  KaboomState.cpp
+  main.cpp
+c:\users\student\documents\austin ai\egp-410\gameai\state machine\main.cpp(83): error C2065: 'gMemoryTracker': undeclared identifier
+c:\users\student\documents\austin ai\egp-410\gameai\state machine\main.cpp(83): error C2228: left of '.reportAllocations' must have class/struct/union
+  c:\users\student\documents\austin ai\egp-410\gameai\state machine\main.cpp(83): note: type is 'unknown-type'
+c:\users\student\documents\austin ai\egp-410\gameai\state machine\main.cpp(123): error C2065: 'gMemoryTracker': undeclared identifier
+c:\users\student\documents\austin ai\egp-410\gameai\state machine\main.cpp(123): error C2228: left of '.reportAllocations' must have class/struct/union
+  c:\users\student\documents\austin ai\egp-410\gameai\state machine\main.cpp(123): note: type is 'unknown-type'
+  MessageAction.cpp
+  StateMachine.cpp
+  TickState.cpp
+  Generating Code...

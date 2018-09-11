@@ -5,45 +5,37 @@
 
 using namespace std;
 
-GameMessageManager::GameMessageManager(Uint32 size)
-{
+GameMessageManager::GameMessageManager(Uint32 size){
 	mMessages = new CircularQueue<GameMessage *>(size);
 }
 
-GameMessageManager::~GameMessageManager()
-{
+GameMessageManager::~GameMessageManager(){
 	GameMessage* pMessage;
-	while( mMessages->popFront(pMessage))
-	{
+	while( mMessages->popFront(pMessage)){
 		delete pMessage;
 	}
 
 	delete mMessages;
 }
 
-void GameMessageManager::processMessagesForThisframe()
-{
+void GameMessageManager::processMessagesForThisframe(){
 	GameMessage* pMessage;
 
-	while(mMessages->popFront(pMessage))
-	{
+	while(mMessages->popFront(pMessage)){
 		double currentTime = gpGame->getCurrentTime();
 
-		if( pMessage->getScheduledTime() <= currentTime )
-		{
+		if(pMessage->getScheduledTime() <= currentTime){
 			pMessage->process();
 			delete pMessage;
 		}
-		else
-		{
+		else {
 			//not time to process yet - push to back
 			mMessages->pushBack(pMessage);
 		}
 	}
 }
 
-void GameMessageManager::addMessage( GameMessage* pMessage, int delay )
-{
+void GameMessageManager::addMessage(GameMessage* pMessage, int delay){
 	double currentTime = gpGame->getCurrentTime();
 
 	//set frame numbers
@@ -51,6 +43,6 @@ void GameMessageManager::addMessage( GameMessage* pMessage, int delay )
 	pMessage->mScheduledTime = currentTime + delay;
 
 	//put it in the message list
-	bool success = mMessages->pushBack( pMessage );
+	bool success = mMessages->pushBack(pMessage);
 	assert(success);
 }

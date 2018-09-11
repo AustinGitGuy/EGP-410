@@ -64,6 +64,8 @@ bool Game::init(){
 	mpComponentManager = new ComponentManager(MAX_UNITS);
 	mpUnitManager = new UnitManager(MAX_UNITS);
 
+	inSys = new InputSystem();
+
 	//load buffers
 	mpGraphicsBufferManager->loadBuffer(mBackgroundBufferID,"wallpaper.bmp");
 	mpGraphicsBufferManager->loadBuffer(mPlayerIconBufferID,"arrow.png");
@@ -136,6 +138,8 @@ void Game::cleanup(){
 	mpUnitManager = NULL;
 	delete mpComponentManager;
 	mpComponentManager = NULL;
+	delete inSys;
+	inSys = NULL;
 }
 
 void Game::beginLoop(){
@@ -173,32 +177,8 @@ void Game::processLoop(){
 
 	mpMessageManager->processMessagesForThisframe();
 
-	//get input - should be moved someplace better
-	SDL_PumpEvents();
-
-	if(SDL_GetMouseState(&x,&y) & SDL_BUTTON(SDL_BUTTON_LEFT)){
-		Vector2D pos( x, y );
-		GameMessage* pMessage = new PlayerMoveToMessage( pos );
-		MESSAGE_MANAGER->addMessage( pMessage, 0 );
-	}
-
-
-	
-	//all this should be moved to InputManager!!!
-	{
-		//get keyboard state
-		const Uint8 *state = SDL_GetKeyboardState(NULL);
-
-		//if escape key was down then exit the loop
-		if(state[SDL_SCANCODE_ESCAPE]){
-			mShouldExit = true;
-		}
-	}
-	Unit* pUnit = mpUnitManager->createRandomUnit(*mpSpriteManager->getSprite(AI_ICON_SPRITE_ID));
-	if(pUnit == NULL){
-		mpUnitManager->deleteRandomUnit();
-	}
-
+	mpUnitManager->deleteRandomUnit();
+	inSys->Update();
 }
 
 bool Game::endLoop(){

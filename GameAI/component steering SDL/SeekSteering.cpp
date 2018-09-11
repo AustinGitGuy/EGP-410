@@ -29,14 +29,14 @@ Steering* SeekSteering::getSteering(){
 	Unit* pOwner = gpGame->getUnitManager()->getUnit(mOwnerID);
 	//are we seeking a location or a unit?
 	
-	if (mTargetID != INVALID_UNIT_ID){
+	if(mTargetID != INVALID_UNIT_ID){
 		//seeking unit
 		Unit* pTarget = gpGame->getUnitManager()->getUnit(mTargetID);
 		assert(pTarget != NULL);
 		mTargetLoc = pTarget->getPositionComponent()->getPosition();
 	}
 
-	if (mType == Steering::SEEK){
+	if(mType == Steering::SEEK){
 		diff = mTargetLoc - pOwner->getPositionComponent()->getPosition();
 	}
 	else {
@@ -45,7 +45,6 @@ Steering* SeekSteering::getSteering(){
 
 	diff.normalize();
 	diff *= pOwner->getMaxAcc();
-
 	float velocityDirection = atan2(diff.getX(), diff.getY());
 	pOwner->getPositionComponent()->setFacing(velocityDirection + (.5 * M_PI));
 

@@ -2,22 +2,23 @@
 
 #include "Trackable.h"
 
-enum MessageType
-{
+enum MessageType {
 	INVALID_MESSAGE_TYPE = -1,
-	PLAYER_MOVETO_MESSAGE = 0
+	PLAYER_MOVETO_MESSAGE = 0,
+	ADD_UNIT_MESSAGE = 1,
+	DELETE_UNIT_MESSAGE = 2,
+	LEAVE_GAME_MESSAGE = 3
 };
 
-class GameMessage: public Trackable
-{
+class GameMessage: public Trackable {
 public:
 	friend class GameMessageManager;
 
-	GameMessage( MessageType type  );
+	GameMessage(MessageType type );
 	~GameMessage();
 
-	double getSubmittedTime() const { return mSubmittedTime; };
-	double getScheduledTime() const { return mScheduledTime; };
+	double getSubmittedTime() const {return mSubmittedTime;};
+	double getScheduledTime() const {return mScheduledTime;};
 
 protected:
 	MessageType mType;
