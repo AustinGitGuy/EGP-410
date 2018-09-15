@@ -7,6 +7,7 @@
 #include "PlayerMoveToMessage.h"
 #include "ExitGameMessage.h"
 #include "AddUnitMessage.h"
+#include "DeleteUnitMessage.h"
 
 InputSystem::InputSystem(){}
 
@@ -33,8 +34,14 @@ void InputSystem::Update(){
 		gpGame->getMessageManager()->addMessage(pMessage, 0);
 	}
 
+	//If return is pressed add a unit
 	if(state[SDL_SCANCODE_RETURN]){
 		GameMessage* pMessage = new AddUnitMessage();
+		gpGame->getMessageManager()->addMessage(pMessage, 0);
+	}
+
+	if(state[SDL_SCANCODE_D]){
+		GameMessage* pMessage = new DeleteUnitMessage();
 		gpGame->getMessageManager()->addMessage(pMessage, 0);
 	}
 }

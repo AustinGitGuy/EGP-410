@@ -1,6 +1,9 @@
+#pragma once
 #include "ComponentManager.h"
 #include "SteeringComponent.h"
 #include "SeekSteering.h"
+#include "ArriveSteering.h"
+#include "FaceSteering.h"
 
 SteeringComponent::SteeringComponent(const ComponentID& id, const ComponentID& physicsComponentID) 
 	:Component(id)
@@ -31,27 +34,29 @@ void SteeringComponent::setData(const SteeringData& data)
 {
 	mData = data;
 
-	switch (data.type)
-	{
-		case Steering::SEEK:
-		{
+	switch (data.type){
+		case Steering::SEEK: {
 			//cleanup old steering - todo: check for already existing steering and reuse if possible
 			delete mpSteering;
 			//create new steering
 			mpSteering = new SeekSteering(data.ownerID, data.targetLoc, data.targetID, false);
 			break;
 		}
-		case Steering::FLEE:
-		{
+		case Steering::FLEE: {
 			mpSteering = new SeekSteering(data.ownerID, data.targetLoc, data.targetID, true);
 			break;
 		}
-		case Steering::ARRIVE:
-		{
+		case Steering::ARRIVE: {
+			delete mpSteering;
+			mpSteering = new ArriveSteering(data.ownerID, data.targetLoc, 10, data.targetID);
 			break;
 		}
-		default:
-		{
+		case Steering::FACE: {
+			delete mpSteering;
+			mpSteering = new FaceSteering(data.ownerID, data.targetLoc, data.targetID);
+			break;
+		}
+		default: {
 
 		}
 	};

@@ -5,7 +5,7 @@
 #include "SpriteManager.h"
 #include "Unit.h"
 
-AddUnitMessage::AddUnitMessage():GameMessage(PLAYER_MOVETO_MESSAGE){}
+AddUnitMessage::AddUnitMessage():GameMessage(ADD_UNIT_MESSAGE){}
 
 AddUnitMessage::~AddUnitMessage() {}
 

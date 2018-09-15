@@ -76,6 +76,15 @@
     <ClCompile Include="AddUnitMessage.cpp">
       <Filter>Source Files\Messaging</Filter>
     </ClCompile>
+    <ClCompile Include="DeleteUnitMessage.cpp">
+      <Filter>Source Files\Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="ArriveSteering.cpp">
+      <Filter>Source Files\Steering</Filter>
+    </ClCompile>
+    <ClCompile Include="FaceSteering.cpp">
+      <Filter>Source Files\Steering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsBuffer.h">
@@ -144,14 +153,23 @@
     <ClInclude Include="Font.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="InputSystem.h">
-      <Filter>Source Files\Input</Filter>
-    </ClInclude>
     <ClInclude Include="ExitGameMessage.h">
       <Filter>Header Files\Messaging</Filter>
     </ClInclude>
     <ClInclude Include="AddUnitMessage.h">
       <Filter>Header Files\Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="InputSystem.h">
+      <Filter>Header Files\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="DeleteUnitMessage.h">
+      <Filter>Header Files\Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="ArriveSteering.h">
+      <Filter>Header Files\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="FaceSteering.h">
+      <Filter>Header Files\Steering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +217,9 @@
     </Filter>
     <Filter Include="Source Files\Input">
       <UniqueIdentifier>{0822fa1e-cb88-4671-a261-8d34b4625051}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Input">
+      <UniqueIdentifier>{066c2319-a7e2-4455-a831-f806ea82c925}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -4,7 +4,7 @@
 #include "UnitManager.h"
 
 ExitGameMessage::ExitGameMessage(const bool& doExit)
-	:GameMessage(PLAYER_MOVETO_MESSAGE)
+	:GameMessage(EXIT_GAME_MESSAGE)
 	, exit(doExit)
 {}
 

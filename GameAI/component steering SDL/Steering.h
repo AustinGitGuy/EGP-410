@@ -1,5 +1,4 @@
 #pragma once
-
 /*Steering - implementation of Steering class from "Artificial Intelligence for Games" - Millington and Funge
 */
 
@@ -7,8 +6,6 @@
 #include <Trackable.h>
 #include "defines.h"
 #include "PhysicsComponent.h"
-
-
 
 class Steering: public Trackable
 {
@@ -18,7 +15,11 @@ public:
 		INVALID_TYPE = -1,
 		SEEK,
 		FLEE,
-		ARRIVE
+		ARRIVE,
+		FACE,
+		WANDER,
+		WANDERCHASE,
+		ARRIVEFACE
 	};
 
 	//constructors and destructors

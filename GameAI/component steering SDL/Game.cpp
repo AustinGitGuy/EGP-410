@@ -76,11 +76,11 @@ bool Game::init(){
 	mpFont = new Font("cour.ttf", 24);
 	
 	//setup sprites
-	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer( mBackgroundBufferID );
+	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer(mBackgroundBufferID);
 	if(pBackGroundBuffer != NULL){
 		mpSpriteManager->createAndManageSprite( BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, (float)pBackGroundBuffer->getWidth(), (float)pBackGroundBuffer->getHeight() );
 	}
-	GraphicsBuffer* pPlayerBuffer = mpGraphicsBufferManager->getBuffer( mPlayerIconBufferID );
+	GraphicsBuffer* pPlayerBuffer = mpGraphicsBufferManager->getBuffer(mPlayerIconBufferID);
 	Sprite* pArrowSprite = NULL;
 	if(pPlayerBuffer != NULL){
 		pArrowSprite = mpSpriteManager->createAndManageSprite( PLAYER_ICON_SPRITE_ID, pPlayerBuffer, 0, 0, (float)pPlayerBuffer->getWidth(), (float)pPlayerBuffer->getHeight() );
@@ -99,9 +99,9 @@ bool Game::init(){
 	//setup units
 	Unit* pUnit = mpUnitManager->createPlayerUnit(*pArrowSprite);
 	pUnit->setShowTarget(true);
-	pUnit->setSteering(Steering::SEEK, ZERO_VECTOR2D);
+	pUnit->setSteering(Steering::ARRIVE, ZERO_VECTOR2D);
 
-	//create 2 enemies
+	/*create 2 enemies
 	pUnit = mpUnitManager->createUnit(*pEnemyArrow, true, PositionData(Vector2D((float)gpGame->getGraphicsSystem()->getWidth()-1, 0.0f), 0.0f));
 	pUnit->setShowTarget(true);
 	pUnit->setSteering(Steering::SEEK, ZERO_VECTOR2D, PLAYER_UNIT_ID);
@@ -109,7 +109,7 @@ bool Game::init(){
 	pUnit = mpUnitManager->createUnit(*pEnemyArrow, true, PositionData(Vector2D(0.0f, (float)gpGame->getGraphicsSystem()->getHeight()-1), 0.0f));
 	pUnit->setShowTarget(false);
 	pUnit->setSteering(Steering::FLEE, ZERO_VECTOR2D, PLAYER_UNIT_ID);
-
+	*/
 
 	return true;
 }
@@ -177,13 +177,12 @@ void Game::processLoop(){
 
 	mpMessageManager->processMessagesForThisframe();
 
-	mpUnitManager->deleteRandomUnit();
 	inSys->Update();
 }
 
 bool Game::endLoop(){
 	//mpMasterTimer->start();
-	mpLoopTimer->sleepUntilElapsed( LOOP_TARGET_TIME );
+	mpLoopTimer->sleepUntilElapsed(LOOP_TARGET_TIME);
 	return mShouldExit;
 }
 

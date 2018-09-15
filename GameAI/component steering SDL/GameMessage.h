@@ -7,7 +7,7 @@ enum MessageType {
 	PLAYER_MOVETO_MESSAGE = 0,
 	ADD_UNIT_MESSAGE = 1,
 	DELETE_UNIT_MESSAGE = 2,
-	LEAVE_GAME_MESSAGE = 3
+	EXIT_GAME_MESSAGE = 3
 };
 
 class GameMessage: public Trackable {

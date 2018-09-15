@@ -11,23 +11,19 @@ UnitID UnitManager::msNextUnitID = PLAYER_UNIT_ID + 1;
 using namespace std;
 
 UnitManager::UnitManager(Uint32 maxSize)
-	:mPool(maxSize, sizeof(Unit))
-{
-}
+	:mPool(maxSize, sizeof(Unit)){}
 
 Unit* UnitManager::createUnit(const Sprite& sprite, bool shouldWrap, const PositionData& posData /*= ZERO_POSITION_DATA*/, const PhysicsData& physicsData /*= ZERO_PHYSICS_DATA*/, const UnitID& id)
 {
 	Unit* pUnit = NULL;
 
 	Byte* ptr = mPool.allocateObject();
-	if (ptr != NULL)
-	{
+	if(ptr != NULL){
 		//create unit
 		pUnit = new (ptr)Unit(sprite);//placement new
 
 		UnitID theID = id;
-		if (theID == INVALID_UNIT_ID)
-		{
+		if (theID == INVALID_UNIT_ID){
 			theID = msNextUnitID;
 			msNextUnitID++;
 		}
@@ -53,51 +49,44 @@ Unit* UnitManager::createUnit(const Sprite& sprite, bool shouldWrap, const Posit
 		pUnit->mMaxRotVel = MAX_ROT_VEL;
 
 	}
-
 	return pUnit;
 }
 
 
-Unit* UnitManager::createPlayerUnit(const Sprite& sprite, bool shouldWrap /*= true*/, const PositionData& posData /*= ZERO_POSITION_DATA*/, const PhysicsData& physicsData /*= ZERO_PHYSICS_DATA*/)
-{
+Unit* UnitManager::createPlayerUnit(const Sprite& sprite, bool shouldWrap /*= true*/, const PositionData& posData /*= ZERO_POSITION_DATA*/, const PhysicsData& physicsData /*= ZERO_PHYSICS_DATA*/){
 	return createUnit(sprite, shouldWrap, posData, physicsData, PLAYER_UNIT_ID);
 }
 
 
-Unit* UnitManager::createRandomUnit(const Sprite& sprite)
-{
+Unit* UnitManager::createRandomUnit(const Sprite& sprite){
 
 	int posX = rand() % gpGame->getGraphicsSystem()->getWidth();
 	int posY = rand() % gpGame->getGraphicsSystem()->getHeight();
 	int velX = rand() % 50 - 25;
 	int velY = rand() % 40 - 20;
 	Unit* pUnit = createUnit(sprite, false, PositionData(Vector2D(posX,posY),0), PhysicsData(Vector2D(velX,velY),Vector2D(0.1f,0.1f), 0.1f, 0.05f));
-	if (pUnit != NULL)
-	{
+	if(pUnit != NULL){
 		//pUnit->setSteering(Steering::SEEK, Vector2D(rand() % gpGame->getGraphicsSystem()->getWidth(), rand() % gpGame->getGraphicsSystem()->getHeight()));
 		pUnit->setSteering(Steering::SEEK, Vector2D(gpGame->getGraphicsSystem()->getWidth()/2, gpGame->getGraphicsSystem()->getHeight()/2));
 	}
 	return pUnit;
 }
 
-Unit* UnitManager::getUnit(const UnitID& id) const
-{
+Unit* UnitManager::getUnit(const UnitID& id) const {
 	auto it = mUnitMap.find(id);
-	if (it != mUnitMap.end())//found?
-	{
+	//found?
+	if(it != mUnitMap.end()){
 		return it->second;
 	}
-	else
-	{
+	else {
 		return NULL;
 	}
 }
 
-void UnitManager::deleteUnit(const UnitID& id)
-{
+void UnitManager::deleteUnit(const UnitID& id){
 	auto it = mUnitMap.find(id);
-	if (it != mUnitMap.end())//found?
-	{
+	//found?
+	if (it != mUnitMap.end()){
 		Unit* pUnit = it->second;//hold for later
 
 		//remove from map
@@ -117,20 +106,16 @@ void UnitManager::deleteUnit(const UnitID& id)
 	}
 }
 
-void UnitManager::deleteRandomUnit()
-{
-	if (mUnitMap.size() >= 1)
-	{
+void UnitManager::deleteRandomUnit(){
+	if(mUnitMap.size() >= 1){
 		Uint32 target = rand() % mUnitMap.size();
-		if (target == 0)//don't allow the 0th element to be deleted as it is the player unit
-		{
+		//don't allow the 0th element to be deleted as it is the player unit
+		if (target == 0){
 			target = 1;
 		}
 		Uint32 cnt = 0;
-		for (auto it = mUnitMap.begin(); it != mUnitMap.end(); ++it, cnt++)
-		{
-			if (cnt == target)
-			{
+		for (auto it = mUnitMap.begin(); it != mUnitMap.end(); ++it, cnt++){
+			if (cnt == target){
 				deleteUnit(it->first);
 				break;
 			}
@@ -138,18 +123,14 @@ void UnitManager::deleteRandomUnit()
 	}
 }
 
-void UnitManager::drawAll() const
-{
-	for (auto it = mUnitMap.begin(); it != mUnitMap.end(); ++it)
-	{
+void UnitManager::drawAll() const {
+	for (auto it = mUnitMap.begin(); it != mUnitMap.end(); ++it){
 		it->second->draw();
 	}
 }
 
-void UnitManager::updateAll(float elapsedTime)
-{
-	for (auto it = mUnitMap.begin(); it != mUnitMap.end(); ++it)
-	{
+void UnitManager::updateAll(float elapsedTime){
+	for (auto it = mUnitMap.begin(); it != mUnitMap.end(); ++it){
 		it->second->update(elapsedTime);
 	}
 }
