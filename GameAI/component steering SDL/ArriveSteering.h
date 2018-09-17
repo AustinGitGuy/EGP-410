@@ -3,9 +3,10 @@
 
 class ArriveSteering : public Steering {
 public:
-	ArriveSteering(const UnitID& ownerID, const Vector2D& targetLoc, float radius, const UnitID& targetID = INVALID_UNIT_ID);
-	void setRadius(const float& radius) { rad = radius; };
+	ArriveSteering(const UnitID& ownerID, const Vector2D& targetLoc, float stopRadius, float arriveRadius, const UnitID& targetID = INVALID_UNIT_ID);
+	void setStopRadius(const float& radius) { stopRad = radius; };
+	void setSlowRadius(const float& radius) { slowRad = radius; };
 protected:
 	virtual Steering* getSteering();
-	float rad;
+	float stopRad, slowRad;
 };
