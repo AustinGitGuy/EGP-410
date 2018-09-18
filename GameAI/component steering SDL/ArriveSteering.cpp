@@ -22,7 +22,7 @@ Steering* ArriveSteering::getSteering(){
 	Unit* pOwner = gpGame->getUnitManager()->getUnit(mOwnerID);
 	//are we seeking a location or a unit?
 
-	float targetTime = 0.1f;
+	float targetTime = 1;
 
 	if(mTargetID != INVALID_UNIT_ID){
 		//seeking unit
@@ -66,14 +66,6 @@ Steering* ArriveSteering::getSteering(){
 	}
 
 	data.acc = targetAcc;
-	data.vel = targetVel;
-
-	/* This is only needed for Arrive and Face, not plain arrive. Use this later
-	direction.normalize();
-	direction *= pOwner->getMaxAcc();
-	float velocityDirection = atan2(direction.getX(), direction.getY());
-	pOwner->getPositionComponent()->setFacing((M_PI) - velocityDirection);
-	*/
 
 	this->mData = data;
 	return this;
