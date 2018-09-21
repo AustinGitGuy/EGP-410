@@ -54,7 +54,7 @@ void SteeringComponent::setData(const SteeringData& data)
 		}
 		case Steering::FACE: {
 			delete mpSteering;
-			mpSteering = new FaceSteering(data.ownerID, data.targetLoc, .2, 1.5, data.targetID);
+			mpSteering = new FaceSteering(data.ownerID, data.targetLoc, .1, .5, data.targetID);
 			break;
 		}
 		case Steering::WANDER: {

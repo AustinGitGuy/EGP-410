@@ -77,7 +77,7 @@ Steering* WanderSteering::getSteering(){
 	}
 
 	data.acc = targetAcc;
-
+	
 	direction.normalize();
 	direction *= pOwner->getMaxAcc();
 	float velocityDirection = atan2(direction.getX(), direction.getY());
