@@ -9,19 +9,18 @@
 
 # define M_PI 3.14159265358979323846  /* pi */
 
-WanderSteering::WanderSteering(const UnitID& ownerID, float radius, const UnitID& targetID):Steering(){
+WanderSteering::WanderSteering(const UnitID& ownerID, float radius):Steering(){
 	int x = gpGame->getUnitManager()->getUnit(ownerID)->getPositionComponent()->getPosition().getX() + radius * genRandomBinomial();
 	int y = gpGame->getUnitManager()->getUnit(ownerID)->getPositionComponent()->getPosition().getY() + radius * genRandomBinomial();
-	if(x > gpGame->getGraphicsSystem()->getWidth() - 25){
-		x = x % gpGame->getGraphicsSystem()->getWidth();
+	if(x > gpGame->getGraphicsSystem()->getWidth()){
+		x = gpGame->getGraphicsSystem()->getWidth() - 5;
 	}
-	if(y > gpGame->getGraphicsSystem()->getHeight() - 25){
-		y = y % gpGame->getGraphicsSystem()->getHeight();
+	if(y > gpGame->getGraphicsSystem()->getHeight()){
+		y = gpGame->getGraphicsSystem()->getHeight() - 5;
 	}
 	const Vector2D pos = Vector2D(x, y);
 	mType = Steering::WANDER;
 	setOwnerID(ownerID);
-	setTargetID(targetID);
 	setTargetLoc(pos);
 	setRadius(radius);
 }
@@ -33,13 +32,6 @@ Steering* WanderSteering::getSteering(){
 
 	float targetTime = 1;
 
-	if(mTargetID != INVALID_UNIT_ID){
-		//seeking unit
-		Unit* pTarget = gpGame->getUnitManager()->getUnit(mTargetID);
-		assert(pTarget != NULL);
-		mTargetLoc = pTarget->getPositionComponent()->getPosition();
-	}
-
 	direction = mTargetLoc - pOwner->getPositionComponent()->getPosition();
 	float distance = direction.getLength();
 
@@ -48,11 +40,11 @@ Steering* WanderSteering::getSteering(){
 	if(distance < 25){
 		int x = gpGame->getUnitManager()->getUnit(mOwnerID)->getPositionComponent()->getPosition().getX() + rad * genRandomBinomial();
 		int y = gpGame->getUnitManager()->getUnit(mOwnerID)->getPositionComponent()->getPosition().getY() + rad * genRandomBinomial();
-		if (x > gpGame->getGraphicsSystem()->getWidth()) {
-			x = x % gpGame->getGraphicsSystem()->getWidth();
+		if(x > gpGame->getGraphicsSystem()->getWidth()){
+			x = gpGame->getGraphicsSystem()->getWidth() - 5;
 		}
-		if (y > gpGame->getGraphicsSystem()->getHeight()) {
-			y = y % gpGame->getGraphicsSystem()->getHeight();
+		if(y > gpGame->getGraphicsSystem()->getHeight()){
+			y = y % gpGame->getGraphicsSystem()->getHeight() - 5;
 		}
 		const Vector2D pos = Vector2D(x, y);
 		setTargetLoc(pos);

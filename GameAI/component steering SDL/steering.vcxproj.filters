@@ -88,6 +88,9 @@
     <ClCompile Include="WanderSteering.cpp">
       <Filter>Source Files\Steering</Filter>
     </ClCompile>
+    <ClCompile Include="WanderAndChase.cpp">
+      <Filter>Header Files\Steering</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsBuffer.h">
@@ -176,6 +179,9 @@
     </ClInclude>
     <ClInclude Include="WanderSteering.h">
       <Filter>Header Files\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="WanderAndChase.h">
+      <Filter>Source Files\Steering</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
