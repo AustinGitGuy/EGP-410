@@ -67,6 +67,11 @@ void SteeringComponent::setData(const SteeringData& data){
 			mpSteering = new WanderAndChase(data.ownerID, data.targetLoc, 10, 150, 250, data.targetID);
 			break;
 		}
+		case Steering::ARRIVEFACE: {
+			delete mpSteering;
+			mpSteering = new ArriveSteering(data.ownerID, data.targetLoc, 10, 150, data.targetID);
+			break;
+		}
 		default: {
 
 		}

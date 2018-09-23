@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AddUnitMessage.h" />
+    <ClInclude Include="ArriveAndFace.h" />
     <ClInclude Include="ArriveSteering.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Component.h" />
@@ -44,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AddUnitMessage.cpp" />
+    <ClCompile Include="ArriveAndFace.cpp" />
     <ClCompile Include="ArriveSteering.cpp" />
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Component.cpp" />
