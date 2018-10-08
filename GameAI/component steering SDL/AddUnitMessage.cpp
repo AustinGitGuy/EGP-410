@@ -5,10 +5,10 @@
 #include "SpriteManager.h"
 #include "Unit.h"
 
-AddUnitMessage::AddUnitMessage():GameMessage(ADD_UNIT_MESSAGE){}
+AddUnitMessage::AddUnitMessage(int num):GameMessage(ADD_UNIT_MESSAGE){numUnits = num;}
 
 AddUnitMessage::~AddUnitMessage() {}
 
 void AddUnitMessage::process(){
-	Unit* pUnit = gpGame->getUnitManager()->createRandomUnit(*gpGame->getSpriteManager()->getSprite(AI_ICON_SPRITE_ID));
+	gpGame->getUnitManager()->createBoidFlock(*gpGame->getSpriteManager()->getSprite(AI_ICON_SPRITE_ID), numUnits);
 }

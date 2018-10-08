@@ -26,6 +26,8 @@ public:
 	Unit* createPlayerUnit(const Sprite& sprite, bool shouldWrap = true, const PositionData& posData = ZERO_POSITION_DATA, const PhysicsData& physicsData = ZERO_PHYSICS_DATA);
 	Unit* createRandomUnit(const Sprite& sprite);
 
+	void createBoidFlock(const Sprite& sprite, int num);
+
 	Unit* getUnit(const UnitID& id) const;
 	void deleteUnit(const UnitID& id);
 	void deleteRandomUnit();
@@ -34,10 +36,10 @@ public:
 	void updateAll(float elapsedTime);
 
 	Unit* getPlayerUnit() const { return getUnit(PLAYER_UNIT_ID); };
+	std::map<UnitID, Unit*> mUnitMap;
 
 private:
 	static UnitID msNextUnitID;
 	MemoryPool mPool;
-	std::map<UnitID, Unit*> mUnitMap;
 };
 

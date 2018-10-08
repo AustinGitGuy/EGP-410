@@ -1,10 +1,18 @@
 #pragma once
+#include <stdio.h>
+#include <assert.h>
+
+#include <sstream>
+#include <SDL.h>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
 
 #include "Trackable.h"
 #include "PerformanceTracker.h"
 #include "Defines.h"
 #include "InputSystem.h"
-#include <string>
 
 class GraphicsSystem;
 class GraphicsBuffer;
@@ -47,6 +55,7 @@ public:
 	inline double getCurrentTime() const { return mpMasterTimer->getElapsedTime(); };
 
 	bool mShouldExit;
+	float cohereWeight, alignWeight, seperateWeight;
 private:
 	GraphicsSystem* mpGraphicsSystem;
 	GraphicsBufferManager* mpGraphicsBufferManager;
@@ -57,7 +66,8 @@ private:
 	Font* mpFont;
 	Timer* mpLoopTimer;
 	Timer* mpMasterTimer;
-	InputSystem* inSys; 
+	InputSystem* inSys;
+	std::ifstream infile;
 
 	//should be somewhere else
 	GraphicsBufferID mBackgroundBufferID = "woods";

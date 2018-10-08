@@ -19,7 +19,11 @@ public:
 		FACE,
 		WANDER,
 		WANDERCHASE,
-		ARRIVEFACE
+		ARRIVEFACE,
+		ALIGNMENT,
+		COHESION,
+		SEPERATION,
+		FLOCKING
 	};
 
 	//constructors and destructors

@@ -34,9 +34,8 @@ void InputSystem::Update(){
 		gpGame->getMessageManager()->addMessage(pMessage, 0);
 	}
 
-	//If return is pressed add a unit
-	if(state[SDL_SCANCODE_RETURN]){
-		GameMessage* pMessage = new AddUnitMessage();
+	if(state[SDL_SCANCODE_A]){
+		GameMessage* pMessage = new AddUnitMessage(10);
 		gpGame->getMessageManager()->addMessage(pMessage, 0);
 	}
 

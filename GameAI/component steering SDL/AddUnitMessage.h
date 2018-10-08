@@ -2,10 +2,11 @@
 
 class AddUnitMessage :public GameMessage {
 public:
-	AddUnitMessage();
+	AddUnitMessage(int num);
 	~AddUnitMessage();
 
 	void process();
 
 private:
+	int numUnits;
 };

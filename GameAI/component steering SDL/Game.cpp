@@ -3,6 +3,10 @@
 
 #include <sstream>
 #include <SDL.h>
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
 
 #include "Game.h"
 #include "GraphicsSystem.h"
@@ -111,7 +115,7 @@ bool Game::init(){
 	pUnit->setShowTarget(false);
 	pUnit->setSteering(Steering::FLEE, ZERO_VECTOR2D, PLAYER_UNIT_ID);
 	*/
-
+	std::cout << "For editing weights please consult weights.txt First line is cohesion, second line is alignment, third line is seperation.\n";
 	return true;
 }
 
@@ -150,6 +154,7 @@ void Game::beginLoop(){
 const float TARGET_ELAPSED_MS = LOOP_TARGET_TIME / 1000.0f;
 	
 void Game::processLoop(){
+
 	mpUnitManager->updateAll(TARGET_ELAPSED_MS);
 	mpComponentManager->update(TARGET_ELAPSED_MS);
 	
@@ -179,6 +184,23 @@ void Game::processLoop(){
 	mpMessageManager->processMessagesForThisframe();
 
 	inSys->Update();
+
+	std::string input;
+	float newNum;
+	infile.open("weights.txt");
+
+	getline(infile, input);
+	newNum = std::stof(input);
+	cohereWeight = newNum;
+
+	getline(infile, input);
+	newNum = std::stof(input);
+	alignWeight = newNum;
+
+	getline(infile, input);
+	newNum = std::stof(input);
+	seperateWeight = newNum;
+	infile.close();
 }
 
 bool Game::endLoop(){
