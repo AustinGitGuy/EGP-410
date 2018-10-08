@@ -12,7 +12,7 @@ Seperation::Seperation(const UnitID& ownerID, float distUnits){
 Steering* Seperation::getSteering(){
 	Unit* pOwner = gpGame->getUnitManager()->getUnit(mOwnerID);
 	PhysicsData data = pOwner->getPhysicsComponent()->getData();
-	Vector2D pos = data.acc;
+	Vector2D pos = ZERO_VECTOR2D;
 	int neighborNum = 0;
 	for (auto it = gpGame->getUnitManager()->mUnitMap.begin(); it != gpGame->getUnitManager()->mUnitMap.end(); ++it){
 		if(it->first != mOwnerID && it->second != NULL){

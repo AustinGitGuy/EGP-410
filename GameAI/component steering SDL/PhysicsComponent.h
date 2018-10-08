@@ -30,7 +30,7 @@ struct PhysicsData : public Trackable
 		, maxSpeed(theMaxSpeed)
 		, maxAccMagnitude(theMaxAcc)
 		, maxRotVel(theMaxRotVel)
-		, maxRotAcc(theMaxRotAcc)
+		, maxRotAcc(theRotAcc)
 	{};
 
 	PhysicsData() 

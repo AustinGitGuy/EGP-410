@@ -200,6 +200,11 @@ void Game::processLoop(){
 	getline(infile, input);
 	newNum = std::stof(input);
 	seperateWeight = newNum;
+
+	getline(infile, input);
+	newNum = std::stof(input);
+	wanderWeight = newNum;
+
 	infile.close();
 }
 

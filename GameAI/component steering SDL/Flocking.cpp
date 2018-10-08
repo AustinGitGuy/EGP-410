@@ -5,6 +5,7 @@
 #include "Alignment.h"
 #include "Seperation.h"
 #include "Cohesion.h"
+#include "WanderSteering.h"
 
 Flocking::Flocking(const UnitID& ownerID, float distUnits){
 	mType = Steering::FLOCKING;
@@ -16,6 +17,8 @@ Steering* Flocking::getSteering(){
 	seperationWeight = gpGame->seperateWeight;
 	alignmentWeight = gpGame->alignWeight;
 	cohesionWeight = gpGame->cohereWeight;
+	wanderWeight = gpGame->wanderWeight;
+
 	Unit* pOwner = gpGame->getUnitManager()->getUnit(mOwnerID);
 	PhysicsData data = pOwner->getPhysicsComponent()->getData();
 
@@ -27,8 +30,8 @@ Steering* Flocking::getSteering(){
 	Steering* alignSteer = align.getSteering();
 	Steering* cohereSteer = cohere.getSteering();
 
-	Vector2D newAcc = data.acc;
-	Vector2D newRotAcc = data.rotAcc;
+	Vector2D newAcc = ZERO_VECTOR2D;
+	float newRotAcc = 0;
 
 	newAcc += sepSteer->getData().acc * seperationWeight;
 	newRotAcc += sepSteer->getData().rotAcc * seperationWeight;
@@ -38,6 +41,9 @@ Steering* Flocking::getSteering(){
 
 	newAcc += cohereSteer->getData().acc * cohesionWeight;
 	newRotAcc += cohereSteer->getData().rotAcc * cohesionWeight;
+
+	data.acc = newAcc;
+	data.rotAcc = newRotAcc;
 
 	this->mData = data;
 	return this;
