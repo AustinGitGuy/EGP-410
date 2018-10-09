@@ -20,7 +20,7 @@ ArriveAndFace::ArriveAndFace(const UnitID& ownerID, const Vector2D& targetLoc, f
 Steering* ArriveAndFace::getSteering(){
 	float targetRot;
 	float stopRadAcc = .1;
-	float slowRadAcc = .5;
+	float slowRadAcc = .3;
 	Vector2D direction;
 	Unit* pOwner = gpGame->getUnitManager()->getUnit(mOwnerID);
 	//are we seeking a location or a unit?

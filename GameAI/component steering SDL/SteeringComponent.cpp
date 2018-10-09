@@ -79,22 +79,22 @@ void SteeringComponent::setData(const SteeringData& data){
 		}
 		case Steering::ALIGNMENT: {
 			delete mpSteering;
-			mpSteering = new Alignment(data.ownerID, 100);
+			mpSteering = new Alignment(data.ownerID, 150);
 			break;
 		}
 		case Steering::COHESION: {
 			delete mpSteering;
-			mpSteering = new Cohesion(data.ownerID, 100);
+			mpSteering = new Cohesion(data.ownerID, 150);
 			break;
 		}
 		case Steering::SEPERATION: {
 			delete mpSteering;
-			mpSteering = new Seperation(data.ownerID, 100);
+			mpSteering = new Seperation(data.ownerID, 150);
 			break;
 		}
 		case Steering::FLOCKING: {
 			delete mpSteering;
-			mpSteering = new Flocking(data.ownerID, 100);
+			mpSteering = new Flocking(data.ownerID, 150);
 			break;
 		}
 		default: {

@@ -17,7 +17,7 @@ Steering* Flocking::getSteering(){
 	seperationWeight = gpGame->seperateWeight;
 	alignmentWeight = gpGame->alignWeight;
 	cohesionWeight = gpGame->cohereWeight;
-	wanderWeight = gpGame->wanderWeight;
+	driftWeight = gpGame->driftWeight;
 
 	Unit* pOwner = gpGame->getUnitManager()->getUnit(mOwnerID);
 	PhysicsData data = pOwner->getPhysicsComponent()->getData();
@@ -41,6 +41,8 @@ Steering* Flocking::getSteering(){
 
 	newAcc += cohereSteer->getData().acc * cohesionWeight;
 	newRotAcc += cohereSteer->getData().rotAcc * cohesionWeight;
+
+	newAcc += driftWeight;
 
 	data.acc = newAcc;
 	data.rotAcc = newRotAcc;

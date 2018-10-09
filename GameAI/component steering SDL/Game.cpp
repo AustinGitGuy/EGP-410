@@ -102,20 +102,10 @@ bool Game::init(){
 
 	//setup units
 	Unit* pUnit = mpUnitManager->createPlayerUnit(*pArrowSprite);
-	pUnit->setShowTarget(true);
+	//pUnit->setShowTarget(true);
 	pUnit->getPositionComponent()->setPosition(Vector2D(100, 100));
-	pUnit->setSteering(Steering::ARRIVE, Vector2D(500, 300));
-
-	/*create 2 enemies
-	pUnit = mpUnitManager->createUnit(*pEnemyArrow, true, PositionData(Vector2D((float)gpGame->getGraphicsSystem()->getWidth()-1, 0.0f), 0.0f));
-	pUnit->setShowTarget(true);
-	pUnit->setSteering(Steering::SEEK, ZERO_VECTOR2D, PLAYER_UNIT_ID);
-
-	pUnit = mpUnitManager->createUnit(*pEnemyArrow, true, PositionData(Vector2D(0.0f, (float)gpGame->getGraphicsSystem()->getHeight()-1), 0.0f));
-	pUnit->setShowTarget(false);
-	pUnit->setSteering(Steering::FLEE, ZERO_VECTOR2D, PLAYER_UNIT_ID);
-	*/
-	std::cout << "For editing weights please consult weights.txt First line is cohesion, second line is alignment, third line is seperation.\n";
+	pUnit->setSteering(Steering::FLOCKING, Vector2D(500, 300));
+	std::cout << "For editing weights please consult weights.txt First line is cohesion, second line is alignment, third line is seperation, fourth line is the general drift.\n";
 	return true;
 }
 
@@ -203,7 +193,7 @@ void Game::processLoop(){
 
 	getline(infile, input);
 	newNum = std::stof(input);
-	wanderWeight = newNum;
+	driftWeight = newNum;
 
 	infile.close();
 }

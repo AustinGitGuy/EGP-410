@@ -55,7 +55,7 @@ public:
 	inline double getCurrentTime() const { return mpMasterTimer->getElapsedTime(); };
 
 	bool mShouldExit;
-	float cohereWeight, alignWeight, seperateWeight, wanderWeight;
+	float cohereWeight, alignWeight, seperateWeight, driftWeight;
 private:
 	GraphicsSystem* mpGraphicsSystem;
 	GraphicsBufferManager* mpGraphicsBufferManager;

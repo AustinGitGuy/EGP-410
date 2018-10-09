@@ -22,7 +22,7 @@ Steering* Seperation::getSteering(){
 			distance = direction.getLength();
 			if(distance < unitDist){
 				direction.normalize();
-				float modifier = distance / 100;
+				float modifier = std::fmin(100 / distance, pOwner->getMaxAcc());
 				pos += direction * modifier;
 				neighborNum++;
 			}
