@@ -12,10 +12,10 @@ class Grid;
 class DepthFirstPathfinder:public GridPathfinder
 {
 public:
-	DepthFirstPathfinder( Graph* pGraph );
+	DepthFirstPathfinder(Graph* pGraph);
 	~DepthFirstPathfinder();
 
-	Path* findPath( Node* pFrom, Node* pTo );//make sure to delete the path when you are done!
+	Path* findPath(Node* pFrom, Node* pTo);//make sure to delete the path when you are done!
 
 private:
 };
