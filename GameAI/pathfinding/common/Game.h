@@ -30,13 +30,13 @@ public:
 	Game();
 	virtual ~Game();
 
-	virtual bool init();
-	virtual void cleanup();
+	virtual bool Init();
+	virtual void Cleanup();
 
 	//game loop
-	virtual void beginLoop();
-	virtual void processLoop();
-	virtual bool endLoop();
+	virtual void BeginLoop();
+	virtual void ProcessLoop();
+	virtual bool EndLoop();
 
 	inline GraphicsSystem* getGraphicsSystem() const { return mpGraphicsSystem; };
 	inline GraphicsBufferManager* getGraphicsBufferManager() const { return mpGraphicsBufferManager; };

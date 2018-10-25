@@ -21,15 +21,15 @@ GraphicsSystem::GraphicsSystem()
 
 GraphicsSystem::~GraphicsSystem()
 {
-	cleanup();
+	Cleanup();
 }
 
-bool GraphicsSystem::init( int width, int height )
+bool GraphicsSystem::Init( int width, int height )
 {
 	mWidth = width;
 	mHeight = height;
 
-	//init SDL
+	//Init SDL
 	if (SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -66,7 +66,7 @@ bool GraphicsSystem::init( int width, int height )
 	return true;
 }
 
-void GraphicsSystem::cleanup()
+void GraphicsSystem::Cleanup()
 {
 	if (mInitted)
 	{
@@ -114,12 +114,12 @@ void GraphicsSystem::wrapCoordinates( Vector2D& vector )
 	}
 }
 
-void GraphicsSystem::draw(const Sprite& aSprite, float dx, float dy, float rotationInRadians /*= 0*/, int flags /*= 0*/)
+void GraphicsSystem::Draw(const Sprite& aSprite, float dx, float dy, float rotationInRadians /*= 0*/, int flags /*= 0*/)
 {
-	draw( *getBackBuffer(), aSprite, dx, dy, rotationInRadians, flags);
+	Draw( *getBackBuffer(), aSprite, dx, dy, rotationInRadians, flags);
 }
 
-void GraphicsSystem::draw(GraphicsBuffer& dest, const Sprite& aSprite, float dx, float dy, float rotationInRadians /*= 0*/, int flags /*= 0*/)
+void GraphicsSystem::Draw(GraphicsBuffer& dest, const Sprite& aSprite, float dx, float dy, float rotationInRadians /*= 0*/, int flags /*= 0*/)
 {
 	SDL_Texture* pOldTarget = setRenderTarget(dest);
 
@@ -164,7 +164,7 @@ void GraphicsSystem::writeText(GraphicsBuffer& dest, Font& font, float dx, float
 		int width, height;
 		textBuffer.getDimensions(width, height);
 
-		draw(dest, Sprite(&textBuffer, 0, 0, width, height), dx, dy);
+		Draw(dest, Sprite(&textBuffer, 0, 0, width, height), dx, dy);
 	}
 	SDL_FreeSurface(pSurfaceText);
 }

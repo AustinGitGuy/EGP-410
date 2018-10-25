@@ -3,11 +3,10 @@
 #include <string>
 #include <Trackable.h>
 
-class DebugContent:public Trackable
-{
+class DebugContent : public Trackable {
 public:
 	DebugContent(){};
 	virtual ~DebugContent(){};
 
-	virtual std::string getDebugString() = 0;
+	virtual std::string GetDebugString() = 0;
 };

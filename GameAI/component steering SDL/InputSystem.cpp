@@ -20,9 +20,9 @@ void InputSystem::Update(){
 
 	SDL_PumpEvents();
 	if(SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT)){
-		Vector2D pos(x, y);
-		GameMessage* pMessage = new PlayerMoveToMessage(pos);
-		gpGame->getMessageManager()->addMessage(pMessage, 0);
+		//Vector2D pos(x, y);
+		//GameMessage* pMessage = new PlayerMoveToMessage(pos);
+		//gpGame->getMessageManager()->addMessage(pMessage, 0);
 	}
 
 	//get keyboard state

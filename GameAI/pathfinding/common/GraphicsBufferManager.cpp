@@ -15,30 +15,26 @@ GraphicsBufferManager::~GraphicsBufferManager()
 	clear();
 }
 
-void GraphicsBufferManager::init()
+void GraphicsBufferManager::Init()
 {
 }
 
-void GraphicsBufferManager::clear()
-{
+void GraphicsBufferManager::clear(){
 	map<GraphicsBufferID,GraphicsBuffer*>::iterator iter;
-	for( iter = mBuffers.begin(); iter != mBuffers.end(); ++iter )
-	{
+	for(iter = mBuffers.begin(); iter != mBuffers.end(); ++iter){
 		GraphicsBuffer* pBuff = iter->second;
 		delete pBuff;
 	}
-
 	mBuffers.clear();
 }
 
-GraphicsBuffer* GraphicsBufferManager::loadBuffer( const GraphicsBufferID& id, const string& filename )
-{
+GraphicsBuffer* GraphicsBufferManager::loadBuffer(const GraphicsBufferID& id, const string& filename){
 	GraphicsBuffer* pBuffer = NULL;
 	
 	//make sure this isn't already out there
-	std::map<GraphicsBufferID, GraphicsBuffer*>::iterator iter = mBuffers.find( id );
-	if( iter == mBuffers.end() )//not already in there
-	{
+	std::map<GraphicsBufferID, GraphicsBuffer*>::iterator iter = mBuffers.find(id);
+	//not already in there
+	if(iter == mBuffers.end()){
 		pBuffer = new GraphicsBuffer( mpGraphicsSystem->loadTexture(filename) );
 		if( pBuffer->isValid() )
 		{

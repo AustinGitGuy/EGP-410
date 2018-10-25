@@ -1,64 +1,47 @@
 #include "Path.h"
 
-Path::Path()
-{
-}
+Path::Path(){}
 
-Path::~Path()
-{
-}
+Path::~Path(){}
 
-Node* Path::peekNode( int index ) const
-{
-	if( (unsigned int)index < mNodes.size() )
-	{
-		return mNodes[index];
+Node* Path::PeekNode(int index) const {
+	if((unsigned int)index < nodes.size()){
+		return nodes[index];
 	}
-	else
-	{
+	else {
 		return NULL;
 	}
 }
 
-Node* Path::peekNextNode() const
-{
-	if( mNodes.size() > 0 )
-	{
-		return mNodes.back();
+Node* Path::PeekNextNode() const {
+	if(nodes.size() > 0){
+		return nodes.back();
 	}
-	else
-	{
+	else {
 		return NULL;
 	}
 }
 
-Node* Path::getAndRemoveNextNode()
-{
-	if( mNodes.size() > 0 )
-	{
-		Node* pNode = mNodes.back();
-		mNodes.pop_back();
+Node* Path::GetAndRemoveNextNode(){
+	if(nodes.size() > 0){
+		Node* pNode = nodes.back();
+		nodes.pop_back();
 		return pNode;
 	}
-	else
-	{
+	else {
 		return NULL;
 	}
 }
 
-void Path::addNode( Node* pNode )
-{
-	mNodes.push_back( pNode );
+void Path::AddNode(Node* pNode){
+	nodes.push_back(pNode);
 }
 
-bool Path::containsNode( Node* pNode )
-{
+bool Path::ContainsNode(Node* pNode){
 	bool retVal = false;
 
-	for( unsigned int i=0; i<mNodes.size(); i++ )
-	{
-		if( mNodes[i] == pNode )
-		{
+	for(unsigned int i=0; i<nodes.size(); i++){
+		if(nodes[i] == pNode){
 			retVal = true;
 			break;
 		}

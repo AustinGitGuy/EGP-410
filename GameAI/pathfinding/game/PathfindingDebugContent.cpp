@@ -5,24 +5,19 @@
 
 using namespace std;
 
-PathfindingDebugContent::PathfindingDebugContent( GridPathfinder* pPathfinder )
-	:mpPathfinder(pPathfinder)
-{
-}
+PathfindingDebugContent::PathfindingDebugContent(GridPathfinder* pPathfinder):gridPathfinder(pPathfinder){}
 
-string PathfindingDebugContent::getDebugString()
-{
+string PathfindingDebugContent::GetDebugString(){
 	stringstream theStream;
 
 #ifdef VISUALIZE_PATH
-	if( mpPathfinder->mpPath != NULL )
-	{
-		theStream << "Pathlength:"<< mpPathfinder->mpPath->getNumNodes();
+	if(gridPathfinder->mPath != NULL){
+		theStream << "Pathlength:"<< gridPathfinder->mPath->GetNumNodes();
 	}
 	
-	theStream << "  Num Nodes Processed:" << mpPathfinder->mVisitedNodes.size();
+	theStream << "  Num Nodes Processed:" << gridPathfinder->visitedNodes.size();
 #endif
-	theStream << "  Elapsed Time:" << mpPathfinder->mTimeElapsed;
+	theStream << "  Elapsed Time:" << gridPathfinder->timeElapsed;
 	return theStream.str();
 }
 

@@ -6,16 +6,15 @@
 class DebugContent;
 class GraphicsBuffer;
 
-class DebugDisplay:public Trackable
-{
+class DebugDisplay:public Trackable {
 public:
-	DebugDisplay( const Vector2D& pos, DebugContent* pContent );
+	DebugDisplay(const Vector2D& pos, DebugContent* pContent);
 	~DebugDisplay();
 
-	void draw( GraphicsBuffer* pBuffer );
+	void Draw(GraphicsBuffer* pBuffer);
 
 private:
-	DebugContent* mpContent;
-	Vector2D mPos;
+	DebugContent* debugContent;
+	Vector2D pos;
 
 };

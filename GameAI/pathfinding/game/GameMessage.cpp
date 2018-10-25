@@ -1,14 +1,7 @@
 #include "GameMessage.h"
 
 
-GameMessage::GameMessage(MessageType type)
-	:mType(type)
-	,mSubmittedTime(0)
-	,mScheduledTime(0)
-{
-}
+GameMessage::GameMessage(MessageType type):messageType(type), submittedTime(0), scheduledTime(0){}
 
 
-GameMessage::~GameMessage()
-{
-}
+GameMessage::~GameMessage(){}

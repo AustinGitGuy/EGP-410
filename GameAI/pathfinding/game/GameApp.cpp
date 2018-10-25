@@ -18,6 +18,9 @@
 #include "GridVisualizer.h"
 #include "DebugDisplay.h"
 #include "PathfindingDebugContent.h"
+#include "DijkstraPathfinder.h"
+#include "InputManager.h"
+#include "AStar.h"
 
 #include <SDL.h>
 #include <fstream>
@@ -26,138 +29,93 @@
 const int GRID_SQUARE_SIZE = 32;
 const std::string gFileName = "pathgrid.txt";
 
-GameApp::GameApp()
-:mpMessageManager(NULL)
-,mpGrid(NULL)
-,mpGridGraph(NULL)
-,mpPathfinder(NULL)
-,mpDebugDisplay(NULL)
-{
+GameApp::GameApp():messageManager(NULL),grid(NULL),gridGraph(NULL),gridPathfinder(NULL),debugDisplay(NULL){}
+
+GameApp::~GameApp(){
+	Cleanup();
 }
 
-GameApp::~GameApp()
-{
-	cleanup();
-}
-
-bool GameApp::init()
-{
-	bool retVal = Game::init();
-	if( retVal == false )
-	{
-
+bool GameApp::Init(){
+	bool retVal = Game::Init();
+	if(!retVal){
 		return false;
 	}
 
-	mpMessageManager = new GameMessageManager();
+	messageManager = new GameMessageManager();
 
 	//create and load the Grid, GridBuffer, and GridRenderer
-	mpGrid = new Grid(mpGraphicsSystem->getWidth(), mpGraphicsSystem->getHeight(), GRID_SQUARE_SIZE);
-	mpGridVisualizer = new GridVisualizer( mpGrid );
-	std::ifstream theStream( gFileName );
-	mpGrid->load( theStream );
+	grid = new Grid(mpGraphicsSystem->getWidth(), mpGraphicsSystem->getHeight(), GRID_SQUARE_SIZE);
+	gridVisualizer = new GridVisualizer(grid);
+	std::ifstream theStream(gFileName);
+	grid->load(theStream);
 
 	//create the GridGraph for pathfinding
-	mpGridGraph = new GridGraph(mpGrid);
-	//init the nodes and connections
-	mpGridGraph->init();
+	gridGraph = new GridGraph(grid);
+	//Init the nodes and connections
+	gridGraph->init();
 
-	mpPathfinder = new DepthFirstPathfinder(mpGridGraph);
+	gridPathfinder = new AStar(gridGraph);
 
 	//load buffers
 	mpGraphicsBufferManager->loadBuffer(mBackgroundBufferID, "wallpaper.bmp");
 
 	//setup sprites
-	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer( mBackgroundBufferID );
-	if( pBackGroundBuffer != NULL )
-	{
-		mpSpriteManager->createAndManageSprite( BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, (float)pBackGroundBuffer->getWidth(), (float)pBackGroundBuffer->getHeight() );
+	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer(mBackgroundBufferID);
+	if(pBackGroundBuffer != NULL){
+		mpSpriteManager->createAndManageSprite(BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, (float)pBackGroundBuffer->getWidth(), (float)pBackGroundBuffer->getHeight());
 	}
 
 	//debug display
-	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder );
-	mpDebugDisplay = new DebugDisplay( Vector2D(0,12), pContent );
+	PathfindingDebugContent* pContent = new PathfindingDebugContent(gridPathfinder);
+	debugDisplay = new DebugDisplay(Vector2D(0,12), pContent);
 
 	mpMasterTimer->start();
 	return true;
 }
 
-void GameApp::cleanup()
-{
-	delete mpMessageManager;
-	mpMessageManager = NULL;
+void GameApp::Cleanup(){
+	delete messageManager;
+	messageManager = NULL;
 
-	delete mpGrid;
-	mpGrid = NULL;
+	delete grid;
+	grid = NULL;
 
-	delete mpGridVisualizer;
-	mpGridVisualizer = NULL;
+	delete gridVisualizer;
+	gridVisualizer = NULL;
 
-	delete mpGridGraph;
-	mpGridGraph = NULL;
+	delete gridGraph;
+	gridGraph = NULL;
 
-	delete mpPathfinder;
-	mpPathfinder = NULL;
+	delete gridPathfinder;
+	gridPathfinder = NULL;
 
-	delete mpDebugDisplay;
-	mpDebugDisplay = NULL;
+	delete debugDisplay;
+	debugDisplay = NULL;
 }
 
-void GameApp::beginLoop()
-{
+void GameApp::BeginLoop(){
 	//should be the first thing done
-	Game::beginLoop();
+	Game::BeginLoop();
 }
 
-void GameApp::processLoop()
-{
+void GameApp::ProcessLoop(){
 	//get back buffer
 	GraphicsBuffer* pBackBuffer = mpGraphicsSystem->getBackBuffer();
 	//copy to back buffer
-	mpGridVisualizer->draw( *pBackBuffer );
+	gridVisualizer->Draw(*pBackBuffer);
 #ifdef VISUALIZE_PATH
 	//show pathfinder visualizer
-	mpPathfinder->drawVisualization(mpGrid, pBackBuffer);
+	gridPathfinder->DrawVisualization(grid, pBackBuffer);
 #endif
 
-	mpDebugDisplay->draw( pBackBuffer );
+	debugDisplay->Draw(pBackBuffer);
+	inputManager->Update();
+	messageManager->ProcessMessagesForThisFrame();
 
-	mpMessageManager->processMessagesForThisframe();
-
-	//get input - should be moved someplace better
-	SDL_PumpEvents();
-	int x, y;
-
-	if (SDL_GetMouseState(&x, &y) & SDL_BUTTON(SDL_BUTTON_LEFT))
-	{
-		static Vector2D lastPos(0.0f, 0.0f);
-		Vector2D pos(x,y);
-		if (lastPos.getX() != pos.getX() || lastPos.getY() != pos.getY())
-		{
-			GameMessage* pMessage = new PathToMessage(lastPos, pos);
-			mpMessageManager->addMessage(pMessage, 0);
-			lastPos = pos;
-		}
-	}
-
-	//get input - should be moved someplace better
-	//all this should be moved to InputManager!!!
-	{
-		//get keyboard state
-		const Uint8 *state = SDL_GetKeyboardState(NULL);
-
-		//if escape key was down then exit the loop
-		if (state[SDL_SCANCODE_ESCAPE])
-		{
-			markForExit();
-		}
-	}
-
-	//should be last thing in processLoop
-	Game::processLoop();
+	//should be last thing in ProcessLoop
+	Game::ProcessLoop();
 }
 
-bool GameApp::endLoop()
-{
-	return Game::endLoop();
+bool GameApp::EndLoop(){
+	return Game::EndLoop();
 }

@@ -9,13 +9,13 @@ class Graph;
 class GraphicsBuffer;
 class Grid;
 
-class DijkstraPathfinder:public GridPathfinder
-{
+class DijkstraPathfinder : public GridPathfinder {
 public:
-	DijkstraPathfinder( Graph* pGraph );
+	DijkstraPathfinder(Graph* pGraph);
 	~DijkstraPathfinder();
 
-	Path* findPath( Node* pFrom, Node* pTo );//make sure to delete the path when you are done!
+	//This is just a basic Dijkstra Pathfinder, not much liberties were taken. It is pretty much just the DFP but with some consitencies to fix crashes.
+	Path* FindPath(Node* fromNode, Node* toNode); //make sure to delete the mPath when you are done!
 
 private:
 };

@@ -5,29 +5,20 @@
 #include "Grid.h"
 #include "GridGraph.h"
 
-PathToMessage::PathToMessage( const Vector2D& from, const Vector2D& to )
-:GameMessage(PATH_TO_MESSAGE)
-,mFrom(from)
-,mTo(to)
-{
-}
+PathToMessage::PathToMessage(const Vector2D& from, const Vector2D& to):GameMessage(PATH_TO_MESSAGE), from(from), to(to){}
 
-PathToMessage::~PathToMessage()
-{
-}
+PathToMessage::~PathToMessage(){}
 
-void PathToMessage::process()
-{
+void PathToMessage::Process(){
 	GameApp* pGame = dynamic_cast<GameApp*>(gpGame);
-	if( pGame != NULL ) 
-	{
-		GridPathfinder* pPathfinder = pGame->getPathfinder();
-		GridGraph* pGridGraph = pGame->getGridGraph();
-		Grid* pGrid = pGame->getGrid();
-		int fromIndex = pGrid->getSquareIndexFromPixelXY( (int)mFrom.getX(), (int)mFrom.getY() );
-		int toIndex = pGrid->getSquareIndexFromPixelXY( (int)mTo.getX(), (int)mTo.getY() );
+	if(pGame != NULL){
+		GridPathfinder* pPathfinder = pGame->GetPathfinder();
+		GridGraph* pGridGraph = pGame->GetGridGraph();
+		Grid* pGrid = pGame->GetGrid();
+		int fromIndex = pGrid->getSquareIndexFromPixelXY( (int)from.getX(), (int)from.getY() );
+		int toIndex = pGrid->getSquareIndexFromPixelXY( (int)to.getX(), (int)to.getY() );
 		Node* pFromNode = pGridGraph->getNode( fromIndex );
 		Node* pToNode = pGridGraph->getNode( toIndex );
-		pPathfinder->findPath( pFromNode, pToNode );
+		pPathfinder->FindPath( pFromNode, pToNode );
 	}
 }

@@ -1,4 +1,4 @@
-#include "DijkstraPathfinder.h"
+#include "AStar.h"
 #include "Path.h"
 #include "Connection.h"
 #include "GridGraph.h"
@@ -11,30 +11,31 @@
 #include <functional>
 #include <queue>
 #include "Compare.h"
+#include "GameApp.h"
+#include "Vector2D.h"
+#include "Grid.h"
 
-DijkstraPathfinder::DijkstraPathfinder(Graph* pGraph):GridPathfinder(dynamic_cast<GridGraph*>(pGraph)){
-	#ifdef VISUALIZE_PATH
+AStar::AStar(Graph* pGraph):GridPathfinder(dynamic_cast<GridGraph*>(pGraph)){
+#ifdef VISUALIZE_PATH
 	mPath = NULL;
-	#endif
+#endif
 }
 
-DijkstraPathfinder::~DijkstraPathfinder(){
-	#ifdef VISUALIZE_PATH
+AStar::~AStar(){
+#ifdef VISUALIZE_PATH
 	delete mPath;
-	#endif
+#endif
 }
 
-//This is just a basic pathfinder we learned in class. Most differences are listed in comments
-Path* DijkstraPathfinder::FindPath(Node* fromNode, Node* toNode){
+//A lot of the stuff from here was taken from my DijkstraPathfinder (obviously)
+//This is the basic A* which uses the DijkstraPathfinder algorithm but then combines a simple guestimate algorithm
+Path* AStar::FindPath(Node* fromNode, Node* toNode){
 	gpPerformanceTracker->clearTracker("path");
 	gpPerformanceTracker->startTracking("path");
 	//allocate nodes to visit priority queue and place starting node in it
 	PriorityQueue<Node*, std::vector<Node*>, Compare> nodesToVisit;
 	fromNode->SetWeight(0); //We can always go from where we are to where we are
 	nodesToVisit.push(fromNode);
-
-	//A lot of the stuff from here was taken from DepthFirstPathfinder with a few modifications to make variable names easier to read
-	//PriorityQueue syntax was taken from http://www.cplusplus.com/reference/queue/priority_queue/
 
 #ifdef VISUALIZE_PATH
 	delete mPath;
@@ -44,7 +45,6 @@ Path* DijkstraPathfinder::FindPath(Node* fromNode, Node* toNode){
 
 	//create Path
 	Path* path = new Path();
-
 	Node* currentNode = NULL;
 	bool toNodeAdded = false;
 
@@ -63,50 +63,59 @@ Path* DijkstraPathfinder::FindPath(Node* fromNode, Node* toNode){
 			for(int i=0; i < connections.size(); i++){
 				Connection* pConnection = connections[i];
 				Node* tempNode = connections[i]->GetToNode();
-
 				//This replaced the find from list with find from the new PriorityQueue
-				if(!toNodeAdded && !path->ContainsNode(tempNode) && nodesToVisit.find(tempNode) == nodesToVisit.end()){
-					tempNode->SetPrevNode(currentNode);
-					tempNode->SetWeight(pConnection->GetWeight() + currentNode->GetWeight());
-					nodesToVisit.push(tempNode);
-					if(tempNode == toNode){
-						toNodeAdded = true;
+				if(!toNodeAdded){
+					float heuristic = Guestimate(tempNode, toNode);
+
+					//Need to spice this up from dijkstra because you need to revisit lists
+					if(path->ContainsNode(tempNode)){
+						if(tempNode->GetWeight() > pConnection->GetWeight() + currentNode->GetWeight()){
+							tempNode->SetPrevNode(currentNode);
+							tempNode->SetWeight(pConnection->GetWeight() + currentNode->GetWeight());
+							tempNode->SetHeuristic(heuristic);
+						}
 					}
+					//This is the normal time
+					else if(nodesToVisit.find(tempNode) == nodesToVisit.end()){
+						tempNode->SetPrevNode(currentNode);
+						tempNode->SetWeight(pConnection->GetWeight() + currentNode->GetWeight());
+						tempNode->SetHeuristic(heuristic);
+						nodesToVisit.push(tempNode);
+						if(tempNode == toNode){
+							toNodeAdded = true;
+						}
 #ifdef VISUALIZE_PATH
-					visitedNodes.push_back(tempNode);
+						visitedNodes.push_back(tempNode);
 #endif
+					}
 				}
 			}
 		}
 
-		//The game will crash if the numnodes are 0 and it tries to generate a mPath
-		if(path->GetNumNodes() <= 0){
-			delete path;
-			path = NULL;
-			mPath = path;
-			return path;
-		}
 		Node* prevNode = toNode;
 
 #ifdef VISUALIZE_PATH
-		//Since the normal visualization puts every node in the mPath, this only puts the mPath in the mPath.
 		delete path;
 		path = new Path();
 		while(prevNode != fromNode){
 			path->AddNode(prevNode);
 			prevNode = prevNode->GetPrevNode();
-			//The game will also crash if you try to grab a null node
-			if(prevNode == NULL){
+			if(prevNode == nullptr){
 				prevNode = fromNode;
 			}
 		}
-#endif
 	}
-
+#endif
 	gpPerformanceTracker->stopTracking("path");
 	timeElapsed = gpPerformanceTracker->getElapsedTime("path");
 #ifdef VISUALIZE_PATH
 	mPath = path;
 #endif
 	return path;
+}
+
+//Uses the simple crow fly. The distance is using this funky cornerofsquare I learned about. The function seems a bit weird but its Deans function not mine.
+float AStar::Guestimate(Node* fromNode, Node* toNode){
+	Grid* gridBoi = dynamic_cast<GameApp*>(gpGame)->GetGrid(); //Get the grid boi
+	return (gridBoi->getULCornerOfSquare(fromNode->GetID()) - gridBoi->getULCornerOfSquare(toNode->GetID())).getLength();
 }

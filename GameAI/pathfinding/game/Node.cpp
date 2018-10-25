@@ -1,15 +1,7 @@
 #include "Node.h"
 
-Node::Node()
-:mId(BAD_NODE_ID)
-{
-}
+Node::Node():id(BAD_NODE_ID){}
 
-Node::Node( const NODE_ID& id )
-:mId(id)
-{
-}
+Node::Node(const NODE_ID& id):id(id){}
 
-Node::~Node()
-{
-}
+Node::~Node(){}

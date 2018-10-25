@@ -3,18 +3,17 @@
 #include <Trackable.h>
 class Node;
 
-class Connection:public Trackable
-{
+class Connection:public Trackable {
 public:
 	Connection( Node* pFrom, Node* pTo, float cost );
 	~Connection();
 
-	inline Node* getFromNode() const { return mpFrom; };
-	inline Node* getToNode() const { return mpTo; };
-	inline float getCost() const { return mCost; };
+	inline Node* GetFromNode() const {return mFrom;};
+	inline Node* GetToNode() const {return mTo;};
+	inline float GetWeight() const {return cost;};
 
 private:
-	Node* mpFrom;
-	Node* mpTo;
-	float mCost;
+	Node* mFrom;
+	Node* mTo;
+	float cost;
 };

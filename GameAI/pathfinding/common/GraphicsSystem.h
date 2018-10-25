@@ -19,8 +19,8 @@ public:
 	GraphicsSystem();
 	~GraphicsSystem();
 
-	bool init( int width, int height );
-	void cleanup();
+	bool Init( int width, int height );
+	void Cleanup();
 
 	void swap();
 	void wrapCoordinates( Vector2D& vector );//change the x and y values in the vector to keep them on the visible screen
@@ -31,10 +31,10 @@ public:
 	inline GraphicsBuffer* getBackBuffer() { return mpBackBuffer; };
 	inline Renderer* getRenderer() { return mpRenderer; };
 
-	//draw the contents of the sprite to the Backbuffer - may be rotated
-	void draw(const Sprite& aSprite, float dx, float dy, float rotationInRadians = 0, int flags = 0);
-	//draw the contents of the sprite to a GraphicsBuffer - may be rotated
-	void draw(GraphicsBuffer& dest, const Sprite& aSprite, float dx, float dy, float rotationInRadians = 0, int flags = 0);
+	//Draw the contents of the sprite to the Backbuffer - may be rotated
+	void Draw(const Sprite& aSprite, float dx, float dy, float rotationInRadians = 0, int flags = 0);
+	//Draw the contents of the sprite to a GraphicsBuffer - may be rotated
+	void Draw(GraphicsBuffer& dest, const Sprite& aSprite, float dx, float dy, float rotationInRadians = 0, int flags = 0);
 	//writeText
 	void writeText(Font& font, float dx, float dy, const std::string& text, const Color& color);
 	//writeText

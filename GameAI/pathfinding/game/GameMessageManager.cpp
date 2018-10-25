@@ -6,47 +6,38 @@
 
 using namespace std;
 
-GameMessageManager::GameMessageManager()
-{
-}
+GameMessageManager::GameMessageManager(){}
 
-GameMessageManager::~GameMessageManager()
-{
+GameMessageManager::~GameMessageManager(){
 	list<GameMessage*>::iterator iter;
-	for( iter = mMessages.begin(); iter != mMessages.end(); ++iter )
-	{
+	for(iter = messageList.begin(); iter != messageList.end(); ++iter){
 		delete (*iter);
 	}
 }
 
-void GameMessageManager::processMessagesForThisframe()
-{
+void GameMessageManager::ProcessMessagesForThisFrame(){
 	double currentTime = gpGame->getCurrentTime();
 
-	list<GameMessage*>::iterator iter = mMessages.begin();
-	while( iter != mMessages.end() )
-	{
-		if( (*iter)->getScheduledTime() <= currentTime )
-		{
-			(*iter)->process();
+	list<GameMessage*>::iterator iter = messageList.begin();
+	while(iter != messageList.end()){
+		if((*iter)->GetScheduledTime() <= currentTime){
+			(*iter)->Process();
 			delete (*iter);
-			iter = mMessages.erase(iter);
+			iter = messageList.erase(iter);
 		}
-		else
-		{
+		else {
 			++iter;
 		}
 	}
 }
 
-void GameMessageManager::addMessage( GameMessage* pMessage, int delay )
-{
+void GameMessageManager::AddMessage(GameMessage* pMessage, int delay){
 	double currentTime = gpGame->getCurrentTime();
 
 	//set frame numbers
-	pMessage->mSubmittedTime = currentTime;
-	pMessage->mScheduledTime = currentTime + delay;
+	pMessage->submittedTime = currentTime;
+	pMessage->scheduledTime = currentTime + delay;
 
 	//put it in the message list
-	mMessages.push_back( pMessage );
+	messageList.push_back(pMessage);
 }

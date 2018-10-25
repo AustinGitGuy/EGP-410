@@ -5,21 +5,19 @@
 
 class Node;
 
-class Path:public Trackable
-{
+class Path : public Trackable {
 public:
 	Path();
 	~Path();
 
-	Node* peekNode( int index ) const;
-	Node* peekNextNode() const;
-	Node* getAndRemoveNextNode();
-	bool containsNode( Node* pNode );
-	int getNumNodes() const { return mNodes.size(); };
+	Node* PeekNode(int index) const;
+	Node* PeekNextNode() const;
+	Node* GetAndRemoveNextNode();
+	bool ContainsNode(Node* pNode);
+	int GetNumNodes() const {return nodes.size();};
 
-	void addNode( Node* pNode );
+	void AddNode(Node* pNode);
 
 private:
-	std::vector<Node*> mNodes;
-
+	std::vector<Node*> nodes;
 };

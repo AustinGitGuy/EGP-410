@@ -5,17 +5,15 @@
 
 class GameMessage;
 
-class GameMessageManager: public Trackable
-{
+class GameMessageManager: public Trackable {
 public:
 	GameMessageManager();
 	~GameMessageManager();
 
-	void addMessage( GameMessage* pMessage, int delay );//note - message manager will now "own" the message and will delete it at its pleasure
-	void processMessagesForThisframe();
+	void AddMessage(GameMessage* pMessage, int delay);//note - message manager will now "own" the message and will delete it at its pleasure
+	void ProcessMessagesForThisFrame();
 
 private:
-
-	std::list<GameMessage*> mMessages;
+	std::list<GameMessage*> messageList;
 };
 

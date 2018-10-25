@@ -28,18 +28,18 @@ int main(int argc, char **argv){
 
 	gpGame = new GameApp();
 
-	gpGame->init();
+	gpGame->Init();
 
 	bool shouldExit = false;
 
 	while(!shouldExit){
-		gpGame->beginLoop();
-		gpGame->processLoop();
-		shouldExit = gpGame->endLoop();
+		gpGame->BeginLoop();
+		gpGame->ProcessLoop();
+		shouldExit = gpGame->EndLoop();
 	}
 
-	//cleanup
-	gpGame->cleanup();
+	//Cleanup
+	gpGame->Cleanup();
 	delete gpGame;
 	delete gpPerformanceTracker;
 

@@ -79,7 +79,7 @@ void UnitManager::createBoidFlock(const Sprite& sprite, int num){
 		int velY = rand() % 40 - 20;
 		Unit* pUnit = createUnit(sprite, true, PositionData(Vector2D(posX ,posY),0), PhysicsData(Vector2D(velX,velY),Vector2D(0.1f ,0.1f), .1f, 0));
 		if(pUnit != NULL){
-			pUnit->setSteering(Steering::FLOCKING, getPlayerUnit()->getPositionComponent()->getPosition(), getPlayerUnit()->getPositionComponent()->getID());
+			pUnit->setSteering(Steering::FLOCKING);
 		}
 	}
 }

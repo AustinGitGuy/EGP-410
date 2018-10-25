@@ -7,8 +7,7 @@
 
 class Connection;
 
-class Graph:public Trackable
-{
+class Graph : public Trackable {
 public:
 	Graph();
 	virtual ~Graph();

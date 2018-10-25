@@ -32,10 +32,10 @@ Game::Game()
 
 Game::~Game()
 {
-	cleanup();
+	Cleanup();
 }
 
-bool Game::init()
+bool Game::Init()
 {
 	srand((UINT)time(0));//seed random number generator
 
@@ -46,9 +46,9 @@ bool Game::init()
 	mpMasterTimer = new Timer;
 
 
-	//create and init GraphicsSystem
+	//create and Init GraphicsSystem
 	mpGraphicsSystem = new GraphicsSystem();
-	bool goodGraphics = mpGraphicsSystem->init(WIDTH, HEIGHT);
+	bool goodGraphics = mpGraphicsSystem->Init(WIDTH, HEIGHT);
 	if (!goodGraphics)
 	{
 		fprintf(stderr, "failed to initialize GraphicsSystem object!\n");
@@ -68,7 +68,7 @@ bool Game::init()
 	return true;
 }
 
-void Game::cleanup()
+void Game::Cleanup()
 {
 	//delete the timers
 	delete mpLoopTimer;
@@ -76,7 +76,7 @@ void Game::cleanup()
 	delete mpMasterTimer;
 	mpMasterTimer = NULL;
 
-	//cleanup font
+	//Cleanup font
 	delete mpFont;
 	mpFont = NULL;
 
@@ -90,21 +90,21 @@ void Game::cleanup()
 	mpSpriteManager = NULL;
 }
 
-void Game::beginLoop()
+void Game::BeginLoop()
 {
 	mpLoopTimer->start();
 
-	//draw background
+	//Draw background
 	Sprite* pBackgroundSprite = mpSpriteManager->getSprite( BACKGROUND_SPRITE_ID );
-	mpGraphicsSystem->draw(*pBackgroundSprite, 0.0f, 0.0f);
+	mpGraphicsSystem->Draw(*pBackgroundSprite, 0.0f, 0.0f);
 }
 
-void Game::processLoop()
+void Game::ProcessLoop()
 {
 		mpGraphicsSystem->swap();
 }
 
-bool Game::endLoop()
+bool Game::EndLoop()
 {
 	//mpMasterTimer->start();
 	mpLoopTimer->sleepUntilElapsed( mLoopTargetTime );

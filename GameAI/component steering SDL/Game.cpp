@@ -101,10 +101,10 @@ bool Game::init(){
 	}
 
 	//setup units
-	Unit* pUnit = mpUnitManager->createPlayerUnit(*pArrowSprite);
+	//Unit* pUnit = mpUnitManager->createPlayerUnit(*pArrowSprite);
 	//pUnit->setShowTarget(true);
-	pUnit->getPositionComponent()->setPosition(Vector2D(100, 100));
-	pUnit->setSteering(Steering::FLOCKING, Vector2D(500, 300));
+	//pUnit->getPositionComponent()->setPosition(Vector2D(100, 100));
+	//pUnit->setSteering(Steering::FLOCKING, Vector2D(500, 300));
 	std::cout << "For editing weights please consult weights.txt First line is cohesion, second line is alignment, third line is seperation, fourth line is the general drift.\n";
 	return true;
 }

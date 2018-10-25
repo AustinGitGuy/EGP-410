@@ -16,7 +16,7 @@ public:
 	GraphicsBufferManager(GraphicsSystem* pSystem);
 	~GraphicsBufferManager();
 
-	void init();
+	void Init();
 	void clear();
 
 	GraphicsBuffer* loadBuffer( const GraphicsBufferID& id, const std::string& filename );

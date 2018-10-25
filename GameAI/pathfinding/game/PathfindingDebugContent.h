@@ -10,8 +10,8 @@ public:
 	PathfindingDebugContent( GridPathfinder* pPathfinder );
 	~PathfindingDebugContent(){};
 
-	std::string getDebugString();
+	std::string GetDebugString();
 
 private:
-	GridPathfinder* mpPathfinder;
+	GridPathfinder* gridPathfinder;
 };
